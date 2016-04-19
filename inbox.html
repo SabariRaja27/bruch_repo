@@ -1,0 +1,145 @@
+<div  class="row" ng-controller="inboxController">
+<div class="col-md-1"></div>
+<div class="col-md-10">
+	<div class="row">&nbsp;</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-4">
+			<div ng-click="clicktilesclassroom($event)"
+				class="info-tiles tiles-success" href="#">
+				<div class="tiles-heading">Classroom(s)</div>
+				<div class="tiles-body-height tiles-body-alt">
+					<i class="fa fa-book"></i>
+					<div class="text-center">{{classroomcount}}</div>
+				</div>
+			</div>
+			<div ng-if="showarrowsuccess" class="arrow-down arrow-success">
+			</div>
+		</div>
+		<div class="col-md-2"></div>
+		<div class="col-md-4">
+			<div ng-click="clicktilesstudent($event)"
+				class="info-tiles tiles-warning" href="#">
+				<div class="tiles-heading">Student(s)</div>
+				<div class="tiles-body-height tiles-body-alt">
+					<i class="fa fa-users"></i>
+					<div class="text-center">{{studentCount}}</div>
+				</div>
+			</div>
+			<div ng-if="showarrowwarning" class="arrow-down arrow-warning">
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+	<div class="row">&nbsp;</div>
+	<div class="row">
+
+		<div class="col-md-6">
+			<div ng-controller="inboxclassroomgridController as showCase">
+				<vm-title title-value="Students by Classroom"
+					style-value="info alert-info" style="white-space: nowrap;"></vm-title>
+				<table datatable="ng" dt-options="showCase.dtOptions" id="tbl_charttable"
+					dt-column-defs="showCase.dtColumnDefs"
+					class="table table-condensed table-responsive">
+					<thead>
+						<tr>
+							<th class="vm-text-center" style="width: 40%;">Name</th>
+							<th class="vm-text-center" style="width: 20%;">Student(s)</th>
+							<!-- <th class="vm-text-center" style="width: 20%;">Unpublished Post</th>
+							<th class="vm-text-center" style="width: 20%;">Unapproved Comments</th> -->
+						</tr>
+					</thead>
+					<tbody class="member">
+						<tr  ng-repeat="data in classroomGridData"
+							ng-click="loadCharts(data.userDetails,data.postDetails,$event) " >
+							<td tooltip-append-to-body="true" tooltip="{{data.name}}">
+								{{ data.name | characters:25}}</td>
+							<td tooltip-append-to-body="true" class="vm-text-center"
+								tooltip="{{data.userCount}}">{{ data.userCount}}</td>
+								
+								<td tooltip-append-to-body="true" class="vm-text-center" 
+								tooltip=UnPublishedPost"{{data.unpublishedPostsCount}}"><i class="fa fa-fire" ></i>{{ data.unpublishedPostsCount}}</td>
+								
+								<td tooltip-append-to-body="true" class="vm-text-center" 
+								tooltip=UnApprovedComments"{{data.pendingApprovalCommentsCount}}"><i class="fa fa-comments"></i>{{ data.pendingApprovalCommentsCount}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<vm-title title-value="Students by Gender"
+				style-value="info alert-info"></vm-title>
+			<highchart id="chart2" config="donutChartConfig"></highchart>
+		</div>
+	</div>
+
+
+
+
+	<div class="row">
+		<div class="col-md-6">
+			<vm-title title-value="Students by Course"
+				style-value="info alert-info"></vm-title>
+			<!--<highchart id="chart4" config="barChartConfig"></highchart>-->
+			<highchart id="chart4" config="piecourseChartConfig"></highchart>
+		</div>
+
+	<div class="col-md-6">
+			<vm-title title-value="Students by Age" style-value="info alert-info"></vm-title>
+			<progress-bar-panel progressbar-items="ProgressBarItems"
+				panel-heading-class="fa fa-fire" panel-title="Students by Age"
+				text-type="yrs" value-type="%" control-id="agegroup"></progress-bar-panel>
+				
+		</div>
+		
+	</div>
+
+
+	<div class="row">
+		<div class="col-md-6">
+			<vm-title title-value="Students by Employment"
+				style-value="info alert-info"></vm-title>
+			<highchart id="chart3" config="pieChartConfig"></highchart>
+		</div>
+		<div class="col-md-6">
+			<vm-title title-value="Post Status"
+				style-value="info alert-info" style="white-space: nowrap;"></vm-title>
+			<!-- <highchart id="chart33" config="drilleddonutChartConfig"></highchart> -->
+			<highchart id="stackchart" config="barChartConfig"></highchart>
+		</div>
+	</div>
+	 <div class="row">&nbsp;</div>
+	
+		<div class="row">
+		<div class="col-md-12">
+			<vm-title title-value="Product"
+				style-value="info alert-info" style="white-space: nowrap;"></vm-title>
+			<highchart id="stackchart" config="productbarChartConfig"></highchart>
+		</div>
+	</div>
+	<div class="row">&nbsp;</div>
+	
+	
+	<div class="row">
+	<div class="col-md-12">
+	
+	</div>
+	
+	<div class="row">
+	
+	<div class="col-md-12">
+	
+	<vm-title title-value="Monthwise Registration"
+				style-value="info alert-info"></vm-title>
+				 
+			<highchart id="chart1" config="lineChartConfig"></highchart>
+		</div>
+		<div class="col-md-2">&nbsp;</div>
+	</div>
+	
+	<div class="row">&nbsp;</div>
+	</div>
+	<div class="col-md-1"></div>
+</div>
+
