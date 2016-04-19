@@ -1,0 +1,51 @@
+public Response create(CourseViewModel viewModel) throws Exception {
+	Response response = new Response();
+	Map<String, Object> map = new HashMap<String, Object>();
+	String entityID = null;
+	try {
+
+		if(viewModel.entityObject.equalsIgnoreCase(CommonUtils.getMessage("Course"))){
+			viewModel.code = RandomStringUtils.randomNumeric(4);
+		}
+		// Calling the helper class to set the mandatory properties of the
+		// view model
+		viewModel = helperUtil.AttachCommonFields(viewModel,
+				CourseViewModel.class);
+		ModelMapper modelMapper = new ModelMapper();
+		// getting the source and target to set the properties
+		modelMapper.getConfiguration()
+				.setSourceNameTokenizer(NameTokenizers.CAMEL_CASE)
+				.setDestinationNameTokenizer(NameTokenizers.CAMEL_CASE);
+		// Mapping the view model to specified class type
+		CourseEntity Courseentity = modelMapper.map(viewModel,
+				CourseEntity.class);
+		// saving the data with the pojo and collection name
+
+		// to get the ID for the saved item
+		Object[] obj = genericDAO
+				.save(viewModel.entityObject, Courseentity);
+		for (Object id : obj) {
+			entityID = String.valueOf(id);
+			Courseentity.setId(entityID);
+		}
+
+		CourseViewModel Coursedata = modelMapper.map(Courseentity,
+				CourseViewModel.class);
+		response.success = true;
+		response.message = CommonUtils
+				.getMessage("success.createCoursedata");
+		// Binding the created data to the view model in the response
+		response.ViewModel = Coursedata;
+	} catch (Exception e) {
+		// return false if there is any database connection problem
+		response.success = false;
+		response.message = CommonUtils.getMessage("error.processfailure");
+		if (null != e.getMessage()) {
+			response.ExceptionMessage = e.getMessage();
+		} else {
+			response.ExceptionMessage = e.toString();
+		}
+	}
+	return response;
+}
+}
